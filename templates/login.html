@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Login - Recipe Share{% endblock %}
+{% block content %}
+<main>
+  <div class="form-container">
+    <h1>Login</h1>
+    {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" name="password" required placeholder="Enter your password">
+          <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+            <i class="lucide-eye"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn"><i class="lucide-log-in"></i> Login</button>
+      <p class="signup-link">Don't have an account? <a href="/signup">Sign up here</a></p>
+    </form>
+  </div>
+</main>
+{% endblock %}

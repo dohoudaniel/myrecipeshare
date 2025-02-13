@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Home - Recipe Share{% endblock %}
+{% block content %}
+<header>
+  <h1>Recipe Share</h1>
+  <nav>
+    <a href="/logout" class="btn">Logout</a>
+  </nav>
+</header>
+<main>
+  <section class="search-filter">
+    <form method="GET" action="/">
+      <input type="text" name="q" placeholder="Search recipes..." value="{{ search|default('') }}">
+      <select name="cuisine">
+        <option value="">All Cuisines</option>
+        <option value="Italian">Italian</option>
+        <option value="Mexican">Mexican</option>
+        <!-- More options... -->
+      </select>
+      <select name="difficulty">
+        <option value="">All Difficulties</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+      <button type="submit" class="btn">Filter</button>
+    </form>
+  </section>
+  <section class="recipes">
+    {% for recipe in recipes %}
+    <div class="recipe-card">
+      <img src="{{ recipe.image_url or '/images/default_recipe.jpg' }}" alt="Recipe Image">
+      <h2>{{ recipe.title }}</h2>
+      <p><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
+      <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
+      <a href="/recipe/{{ recipe._id }}" class="btn">View Recipe</a>
+      {% if recipe._id|string in favorites %}
+      <a href="/favorite/{{ recipe._id }}" class="btn favorite">Unfavorite</a>
+      {% else %}
+      <a href="/favorite/{{ recipe._id }}" class="btn favorite">Favorite</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </section>
+  <section class="upload-recipe">
+    <a href="/upload_recipe" class="btn">Upload New Recipe</a>
+  </section>
+</main>
+{% endblock %}

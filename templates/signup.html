@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Sign Up - Recipe Share{% endblock %}
+{% block content %}
+<main>
+  <div class="form-container">
+    <h1>Sign Up</h1>
+    {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+    <form action="/signup" method="POST">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="Enter a password (min 8 characters)">
+      </div>
+      <button type="submit" class="btn"><i class="lucide-user-plus"></i> Sign Up</button>
+      <p class="signup-link">Already have an account? <a href="/login">Login here</a></p>
+    </form>
+  </div>
+</main>
+{% endblock %}
