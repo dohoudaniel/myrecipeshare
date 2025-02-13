@@ -6,6 +6,7 @@ Features:
 - Search and filter recipes by cuisine or difficulty.
 - Users can mark recipes as favorites.
 - Route protection and custom 404 error handling.
+- USER DETAIL VALIDATION: first name, last name, email, and password constraints.
 """
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
@@ -13,16 +14,15 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
 import os
-from datetime import timedelta  # NEW: IMPORT TIMEDTA
+import re  # ADDED FOR REGEX VALIDATION
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/recipe_app")
 app.secret_key = os.environ.get("SECRET_KEY", "your-secret-key")
-app.permanent_session_lifetime = timedelta(minutes=30)  # NEW: SET SESSION LIFETIME TO 30 MINUTES
 
 mongo = PyMongo(app)
 
-# Helper: Login required decorator
+# HELPER: LOGIN REQUIRED DECORATOR
 def login_required(f):
     from functools import wraps
     @wraps(f)
@@ -33,11 +33,10 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# ROUTE: Home / Landing Page
+# ROUTE: HOME / LANDING PAGE
 @app.route("/")
 def index():
     if "user_id" in session:
-        # User is logged in; show home page with recipes.
         search_query = request.args.get("q", "")
         cuisine_filter = request.args.get("cuisine", "")
         difficulty_filter = request.args.get("difficulty", "")
@@ -49,7 +48,6 @@ def index():
         if difficulty_filter:
             query["difficulty"] = difficulty_filter
         recipes = list(mongo.db.recipes.find(query))
-        # Fetch user's favorites
         user = mongo.db.users.find_one({"_id": ObjectId(session["user_id"])})
         favorites = user.get("favorites", []) if user else []
         return render_template("home.html", recipes=recipes, favorites=favorites,
@@ -57,23 +55,45 @@ def index():
     else:
         return render_template("landing.html")
 
-# ROUTE: Signup
+# ROUTE: SIGNUP
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if "user_id" in session:
         return redirect(url_for("index"))
     if request.method == "POST":
-        firstName = request.form.get("firstName")
-        lastName = request.form.get("lastName")
-        email = request.form.get("email")
-        password = request.form.get("password")
-        # Basic validation
-        if not all([firstName, lastName, email, password]):
-            flash("All fields are required.", "error")
+        firstName = request.form.get("firstName", "").strip()
+        lastName = request.form.get("lastName", "").strip()
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "")
+
+        # VALIDATE FIRST NAME (MUST BE AT LEAST 2 CHARACTERS)
+        if len(firstName) < 2:
+            flash("First name must be at least 2 characters long.", "error")
             return redirect(url_for("signup"))
+
+        # VALIDATE LAST NAME (MUST BE AT LEAST 2 CHARACTERS)
+        if len(lastName) < 2:
+            flash("Last name must be at least 2 characters long.", "error")
+            return redirect(url_for("signup"))
+
+        # VALIDATE EMAIL FORMAT
+        email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"  # EMAIL REGEX
+        if not re.match(email_regex, email):
+            flash("Please enter a valid email address.", "error")
+            return redirect(url_for("signup"))
+
+        # VALIDATE PASSWORD: AT LEAST 8 CHARACTERS, CONTAINS A NUMBER, A LOWERCASE, AND AN UPPERCASE LETTER
+        password_regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+        if not re.match(password_regex, password):
+            flash("Password must be at least 8 characters long and include a number, a lowercase letter, and an uppercase letter.", "error")
+            return redirect(url_for("signup"))
+
+        # CHECK IF EMAIL IS ALREADY REGISTERED
         if mongo.db.users.find_one({"email": email}):
             flash("Email is already registered.", "error")
             return redirect(url_for("signup"))
+
+        # CREATE NEW USER
         hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
         user_id = mongo.db.users.insert_one({
             "firstName": firstName,
@@ -86,31 +106,31 @@ def signup():
         return redirect(url_for("login"))
     return render_template("signup.html")
 
-# ROUTE: Login
+# ROUTE: LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if "user_id" in session:
         return redirect(url_for("index"))
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "")
         user = mongo.db.users.find_one({"email": email})
+        # IF EMAIL DOES NOT EXIST OR PASSWORD DOESN'T MATCH, FLASH ERROR
         if user and bcrypt.checkpw(password.encode("utf-8"), user["password"]):
             session["user_id"] = str(user["_id"])
-            session.permanent = True  # NEW: MARK SESSION AS PERMANENT SO IT EXPIRES AFTER 30 MINUTES
             return redirect(url_for("index"))
         else:
             flash("Invalid email or password.", "error")
             return redirect(url_for("login"))
     return render_template("login.html")
 
-# ROUTE: Logout
+# ROUTE: LOGOUT
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))
 
-# ROUTE: Upload Recipe (Protected)
+# ROUTE: UPLOAD RECIPE (PROTECTED)
 @app.route("/upload_recipe", methods=["GET", "POST"])
 @login_required
 def upload_recipe():
@@ -120,7 +140,7 @@ def upload_recipe():
         steps = request.form.get("steps")
         cuisine = request.form.get("cuisine")
         difficulty = request.form.get("difficulty")
-        image_url = request.form.get("image_url")  # For simplicity, we assume a URL is provided
+        image_url = request.form.get("image_url")  # Assume a URL is provided
         if not title:
             flash("Title is required.", "error")
             return redirect(url_for("upload_recipe"))
@@ -140,7 +160,7 @@ def upload_recipe():
         return redirect(url_for("index"))
     return render_template("upload_recipe.html")
 
-# ROUTE: Toggle Favorite (Protected)
+# ROUTE: TOGGLE FAVORITE (PROTECTED)
 @app.route("/favorite/<recipe_id>")
 @login_required
 def favorite(recipe_id):
@@ -153,7 +173,7 @@ def favorite(recipe_id):
         mongo.db.users.update_one({"_id": ObjectId(session["user_id"])}, {"$push": {"favorites": recipe_id}})
     return redirect(url_for("index"))
 
-# ROUTE: View Recipe (Optional)
+# ROUTE: VIEW RECIPE (OPTIONAL)
 @app.route("/recipe/<recipe_id>")
 def view_recipe(recipe_id):
     recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
@@ -167,5 +187,5 @@ def page_not_found(e):
     return render_template("404.html"), 404
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)

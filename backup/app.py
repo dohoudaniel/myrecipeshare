@@ -13,12 +13,10 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
 import os
-from datetime import timedelta  # NEW: IMPORT TIMEDTA
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/recipe_app")
 app.secret_key = os.environ.get("SECRET_KEY", "your-secret-key")
-app.permanent_session_lifetime = timedelta(minutes=30)  # NEW: SET SESSION LIFETIME TO 30 MINUTES
 
 mongo = PyMongo(app)
 
@@ -97,7 +95,6 @@ def login():
         user = mongo.db.users.find_one({"email": email})
         if user and bcrypt.checkpw(password.encode("utf-8"), user["password"]):
             session["user_id"] = str(user["_id"])
-            session.permanent = True  # NEW: MARK SESSION AS PERMANENT SO IT EXPIRES AFTER 30 MINUTES
             return redirect(url_for("index"))
         else:
             flash("Invalid email or password.", "error")

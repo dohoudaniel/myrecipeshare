@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Recipe Share{% endblock %}</title>
-  <link rel="icon" href="{{ url_for('static', filename='images/logos/logo.jpg') }}" type="image/jpeg">
+  <link rel="icon" href="{{ url_for('static', filename='images/logos/logo.jpg') }}" type="image/jpg">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
 <body>
   <noscript>
     <div class="noscript-warning">You must enable JavaScript to use this website.</div>
   </noscript>
-
+  
   <!-- Theme Toggle Button -->
   <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
-
+  
   {% block content %}{% endblock %}
-
+  
   <footer>
     <p>
-      ©️ 2025 copyright •
+      ©️ 2025 copyright • 
       Daniel Favour Dohou • All Rights Reserved
     </p>
   </footer>

@@ -12,12 +12,12 @@
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --warning-bg: #fee2e2;
     --warning-text: #0c0c0c;
-
+    
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, #4361ee, #3f37c9);
     --gradient-hover: linear-gradient(135deg, #3f37c9, #4361ee);
   }
-
+  
   [data-theme="dark"] {
     --background: #0f172a;
     --foreground: #f8fafc;
@@ -32,7 +32,7 @@
     --warning-bg: #7f1d1d;
     --warning-text: #fecaca;
   }
-
+  
   /* Global Styles */
   * {
     margin: 0;
@@ -40,7 +40,7 @@
     box-sizing: border-box;
     transition: background-color 0.3s, color 0.3s, transform 0.3s;
   }
-
+  
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--background);
@@ -50,7 +50,7 @@
     display: flex;
     flex-direction: column;
   }
-
+  
   .noscript-warning {
     background-color: var(--warning-bg);
     color: var(--warning-text);
@@ -58,7 +58,7 @@
     padding: 1rem;
     font-size: 0.875rem;
   }
-
+  
   /* Header & Navigation */
   header {
     display: flex;
@@ -68,11 +68,11 @@
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border);
   }
-
+  
   header h1 {
     font-size: 1.5rem;
   }
-
+  
   nav a.btn {
     margin-left: 1rem;
     text-decoration: none;
@@ -82,33 +82,33 @@
     color: white;
     transition: background 0.3s;
   }
-
+  
   nav a.btn:hover {
     background: var(--gradient-hover);
   }
-
+  
   /* Main Content */
   main {
     flex: 1;
     padding: 2rem;
   }
-
+  
   .container, .form-container {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
   }
-
+  
   .hero {
     margin: 2rem 0;
   }
-
+  
   .paragraph {
     font-size: clamp(1rem, 2vw, 1.125rem);
     color: var(--muted);
     margin-bottom: 2rem;
   }
-
+  
   /* Forms */
   .form-container {
     background-color: var(--card-bg);
@@ -118,23 +118,23 @@
     max-width: 400px;
     margin: 0 auto;
   }
-
+  
   .form-group {
     margin-bottom: 1.5rem;
     text-align: left;
   }
-
+  
   label {
     margin-bottom: 0.5rem;
     display: block;
     color: var(--foreground);
     font-weight: 500;
   }
-
+  
   .input-wrapper {
     position: relative;
   }
-
+  
   input {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -144,13 +144,13 @@
     color: var(--foreground);
     font-size: 1rem;
   }
-
+  
   input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
   }
-
+  
   .password-toggle {
     position: absolute;
     right: 1rem;
@@ -164,12 +164,12 @@
     border-radius: 0.25rem;
     transition: all 0.3s ease;
   }
-
+  
   .password-toggle:hover {
     color: var(--primary);
     background-color: rgba(67, 97, 238, 0.1);
   }
-
+  
   /* Buttons */
   .btn {
     display: inline-flex;
@@ -183,12 +183,12 @@
     color: white;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-
+  
   .btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow);
   }
-
+  
   /* Footer */
   footer {
     text-align: center;
@@ -198,17 +198,17 @@
     font-size: 0.875rem;
     margin-top: auto;
   }
-
+  
   footer a {
     color: var(--muted);
     text-decoration: none;
     transition: color 0.2s;
   }
-
+  
   footer a:hover {
     color: var(--primary);
   }
-
+  
   /* Theme Toggle */
   .theme-toggle {
     position: fixed;
@@ -223,11 +223,11 @@
     transition: background-color 0.2s;
     z-index: 100;
   }
-
+  
   .theme-toggle:hover {
     background-color: var(--border);
   }
-
+  
   /* Animations */
   @keyframes fadeInDown {
     from {
@@ -239,7 +239,7 @@
       transform: translateY(0);
     }
   }
-
+  
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -250,7 +250,7 @@
       transform: translateY(0);
     }
   }
-
+  
   /* Media Queries */
   @media (max-width: 640px) {
     main {
@@ -260,10 +260,11 @@
       padding: 1.5rem;
     }
   }
-
+  
   @media (prefers-reduced-motion: reduce) {
     * {
       animation: none !important;
       transition: none !important;
     }
   }
+  
