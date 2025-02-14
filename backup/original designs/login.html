@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - Recipe Share</title>
+  <title>Login - Recipe Share</title>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logos/logo.jpg') }}">
   <!-- Google Font: Merriweather -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
-  <!-- Signup Page CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
-  <!-- Signup Page JS -->
-  <script src="{{ url_for('static', filename='js/signup.js') }}" defer></script>
+  <!-- Login Page CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  <!-- Login Page JS -->
+  <script src="{{ url_for('static', filename='js/login.js') }}" defer></script>
 </head>
 <body>
   <noscript>
@@ -31,7 +31,7 @@
       </div>
       <div class="navbar-right">
         <nav class="desktop-nav">
-          <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+          <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
           <a href="{{ url_for('index') }}" class="nav-link">Home</a>
         </nav>
         <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
@@ -39,26 +39,20 @@
       </div>
     </div>
     <nav class="mobile-nav">
-      <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+      <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
       <a href="{{ url_for('index') }}" class="nav-link">Home</a>
     </nav>
   </header>
 
-  <!-- MAIN SIGNUP FORM -->
+  <!-- MAIN LOGIN FORM -->
   <main>
     <div class="form-container">
-      <h1 align="center">Sign Up</h1>
-      <!-- Error message (if any) -->
-      <div class="error-message" id="error-message" style="display: none;"></div>
-      <form action="{{ url_for('signup') }}" method="POST" id="signup-form" novalidate>
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
-        </div>
+      <h1 align="center">Login</h1>
+      <!-- Error message (displayed if present) -->
+      {% if error %}
+      <div class="error-message">{{ error }}</div>
+      {% endif %}
+      <form action="{{ url_for('login') }}" method="POST" id="login-form" novalidate>
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required placeholder="Enter your email">
@@ -71,19 +65,13 @@
               <span class="toggle-icon">👀</span>
             </button>
           </div>
-          <!-- Live Password Validation Requirements -->
-          <ul class="password-requirements" id="password-requirements">
-            <li id="req-length">❌ At least 8 characters</li>
-            <li id="req-number">❌ Contains a number</li>
-            <li id="req-lower">❌ Contains a lowercase letter</li>
-            <li id="req-upper">❌ Contains an uppercase letter</li>
-          </ul>
         </div>
-        <button type="submit" class="btn"><i class="lucide-user-plus"></i> Sign Up</button>
-        <p class="signup-link">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        <button type="submit" class="btn"><i class="lucide-log-in"></i> Login</button>
+        <p class="signup-link">Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a></p>
       </form>
     </div>
   </main>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-container">
