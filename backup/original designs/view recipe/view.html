@@ -31,8 +31,8 @@
       </div>
       <div class="navbar-right">
         <nav class="desktop-nav">
-          <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
           <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+          <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
         </nav>
         <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
@@ -79,15 +79,13 @@
       </section>
       
       <div class="action-buttons">
-        <!-- Improved Share Button -->
         <button type="button" class="btn share-btn" id="share-btn">
           <i class="lucide-share"></i> Share Recipe
         </button>
-        <!-- Optional: other actions can be added here -->
       </div>
       
-      <!-- Share alert (hidden by default) -->
-      <div id="share-alert" class="share-alert">Recipe Link copied to clipboard!</div>
+      <!-- Hidden element for share alert -->
+      <div id="share-alert" class="share-alert">Recipe Link copied to clipboard</div>
     </div>
   </main>
 

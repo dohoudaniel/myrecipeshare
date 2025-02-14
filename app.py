@@ -11,6 +11,7 @@ Features:
 from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from bson.errors import InvalidId  # ADDED: Import InvalidId
 import bcrypt
 import os
 from datetime import timedelta  # NEW: IMPORT TIMEDTA
@@ -154,9 +155,19 @@ def favorite(recipe_id):
     return redirect(url_for("index"))
 
 # ROUTE: View Recipe (Optional)
+# @app.route("/recipe/<recipe_id>")
+# def view_recipe(recipe_id):
+#     recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+#     if not recipe:
+#         abort(404)
+#     return render_template("view_recipe.html", recipe=recipe)
 @app.route("/recipe/<recipe_id>")
 def view_recipe(recipe_id):
-    recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    try:
+        obj_id = ObjectId(recipe_id)  # ADDED: Try converting recipe_id
+    except InvalidId:                # ADDED: Catch InvalidId error
+        abort(404)                   # ADDED: Abort with a 404 if invalid
+    recipe = mongo.db.recipes.find_one({"_id": obj_id})
     if not recipe:
         abort(404)
     return render_template("view_recipe.html", recipe=recipe)

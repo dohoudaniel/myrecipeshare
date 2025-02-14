@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}View Recipe - {{ recipe.title }}{% endblock %}
+{% block content %}
+<main>
+  <div class="recipe-container">
+    <h1>{{ recipe.title }}</h1>
+    
+    {% if recipe.image_url %}
+    <img src="{{ recipe.image_url }}" alt="{{ recipe.title }} image" class="recipe-image">
+    {% endif %}
+    
+    <p><strong>Cuisine:</strong> {{ recipe.cuisine or "Not specified" }}</p>
+    <p><strong>Difficulty:</strong> {{ recipe.difficulty or "Not specified" }}</p>
+    
+    <section class="ingredients">
+      <h2>Ingredients</h2>
+      <ul>
+        {% for ingredient in recipe.ingredients.split('\n') %}
+          {% if ingredient.strip() %}
+          <li>{{ ingredient }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+    
+    <section class="steps">
+      <h2>Preparation Steps</h2>
+      <ol>
+        {% for step in recipe.steps.split('\n') %}
+          {% if step.strip() %}
+          <li>{{ step }}</li>
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+  </div>
+</main>
+{% endblock %}
