@@ -62,9 +62,10 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.navbar-left {
+.navbar-left a {
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 .logo {
   height: 40px;
@@ -172,6 +173,14 @@ footer {
   font-size: 0.9rem;
   color: var(--muted);
   margin-top: auto;
+}
+
+/* MOBILE RESPONSIVENESS FOR FOOTER */
+@media (max-width: 480px) {
+  footer {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+  }
 }
 
 /* Responsive Styles */

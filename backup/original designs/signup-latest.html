@@ -34,6 +34,7 @@
           <a href="{{ url_for('login') }}" class="nav-link">Login</a>
           <a href="{{ url_for('index') }}" class="nav-link">Home</a>
         </nav>
+        <!-- THEME TOGGLE BUTTON -->
         <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
       </div>
@@ -48,9 +49,11 @@
   <main>
     <div class="form-container">
       <h1 align="center">Sign Up</h1>
-      <!-- Error message (if any) -->
-      <div class="error-message" id="error-message" style="display: none;"></div>
-      <form action="{{ url_for('signup') }}" method="POST" id="signup-form" novalidate>
+      <!-- Error message (displayed if present) -->
+      {% if error %}
+      <div class="error-message">{{ error }}</div>
+      {% endif %}
+      <form action="{{ url_for('signup') }}" method="POST" id="signup-form">
         <div class="form-group">
           <label for="firstName">First Name</label>
           <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
@@ -66,18 +69,12 @@
         <div class="form-group">
           <label for="password">Password</label>
           <div class="input-wrapper">
-            <input type="password" id="password" name="password" required placeholder="Enter your password">
+            <input type="password" id="password" name="password" required placeholder="Enter a password (min 8 characters)">
+            <!-- SHOW 👀 ICON WHEN PASSWORD IS HIDDEN -->
             <button type="button" class="password-toggle" aria-label="Toggle password visibility">
               <span class="toggle-icon">👀</span>
             </button>
           </div>
-          <!-- Live Password Validation Requirements -->
-          <ul class="password-requirements" id="password-requirements">
-            <li id="req-length">❌ At least 8 characters</li>
-            <li id="req-number">❌ Contains a number</li>
-            <li id="req-lower">❌ Contains a lowercase letter</li>
-            <li id="req-upper">❌ Contains an uppercase letter</li>
-          </ul>
         </div>
         <button type="submit" class="btn"><i class="lucide-user-plus"></i> Sign Up</button>
         <p class="signup-link">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
@@ -85,7 +82,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <!-- FOOTER -->
   <footer>
     <div class="footer-container">

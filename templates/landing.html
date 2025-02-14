@@ -23,9 +23,11 @@
   <header class="navbar">
     <div class="navbar-container">
       <div class="navbar-left">
+      <a href="{{ url_for('index') }}">
         <img src="{{ url_for('static', filename='images/logos/logo.jpg') }}" alt="Logo" class="logo">
         <span class="site-name">Recipe Share</span>
-      </div>
+      </a>
+    </div>
       <div class="navbar-right">
         <nav class="desktop-nav">
           <a href="{{ url_for('login') }}" class="nav-link">Login</a>
@@ -53,9 +55,7 @@
   <footer>
     <div class="footer-container">
       <p>
-        ©️ 2025 copyright •
-        <a class="nav-link" href="https://linktr.ee/dohoudanielfavour" target="_blank" rel="noopener noreferrer">Daniel Favour Dohou</a>
-        • All Rights Reserved
+        ©️ 2025 Recipe Share • All Rights Reserved
       </p>
     </div>
   </footer>
