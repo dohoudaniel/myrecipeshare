@@ -31,28 +31,32 @@
       </div>
       <div class="navbar-right">
         <nav class="desktop-nav">
-          <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+          <a href="{{ url_for('logout') }}" class="nav-link btn">Logout</a>
+          <!-- a href="{{ url_for('signup') }}" class="nav-link">Sign Up</!-->
+          <!-- a href="{{ url_for('login') }}" class="nav-link">Login</!-->
         </nav>
         <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
       </div>
     </div>
     <nav class="mobile-nav">
-      <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+      <a href="{{ url_for('logout') }}" class="nav-link btn">Logout</a>
+      <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
+      <a href="{{ url_for('login') }}" class="nav-link">Login</a>
     </nav>
   </header>
 
   <!-- MAIN CONTENT -->
   <main>
-    <!-- SEARCH & FILTER SECTION -->
+    <!-- Search & Filter Section -->
     <section class="search-filter">
-      <form method="GET" action="{{ url_for('index') }}">
+      <form method="GET" action="/">
         <input type="text" name="q" placeholder="Search recipes..." value="{{ search|default('') }}">
         <select name="cuisine">
           <option value="">All Cuisines</option>
           <option value="Italian" {% if cuisine == 'Italian' %}selected{% endif %}>Italian</option>
           <option value="Mexican" {% if cuisine == 'Mexican' %}selected{% endif %}>Mexican</option>
-          <!-- More cuisines as needed -->
+          <!-- More options... -->
         </select>
         <select name="difficulty">
           <option value="">All Difficulties</option>
@@ -64,33 +68,27 @@
       </form>
     </section>
 
-    <!-- RECIPES SECTION -->
+    <!-- Recipes Section -->
     <section class="recipes">
       {% for recipe in recipes %}
       <div class="recipe-card">
         <img src="{{ recipe.image_url or url_for('static', filename='images/default_recipe.jpg') }}" alt="Recipe Image">
-        <div class="recipe-info">
-          <h2>{{ recipe.title }}</h2>
-          <p><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
-          <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
-          <div class="recipe-actions">
-            <button type="button" class="btn view-btn" onclick="location.href='{{ url_for('view_recipe', recipe_id=recipe._id) }}'">
-              <i class="lucide-home"></i> View Recipe
-            </button>
-            {% if recipe._id|string in favorites %}
-              <button type="button" class="btn favorite-btn" onclick="location.href='{{ url_for('favorite', recipe_id=recipe._id) }}'">Unfavorite</button>
-            {% else %}
-              <button type="button" class="btn favorite-btn" onclick="location.href='{{ url_for('favorite', recipe_id=recipe._id) }}'">Favorite</button>
-            {% endif %}
-          </div>
-        </div>
+        <h2>{{ recipe.title }}</h2>
+        <p><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
+        <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
+        <a href="{{ url_for('view_recipe', recipe_id=recipe._id) }}" class="btn view-btn">View Recipe</a>
+        {% if recipe._id|string in favorites %}
+          <a href="{{ url_for('favorite', recipe_id=recipe._id) }}" class="btn favorite-btn">Unfavorite</a>
+        {% else %}
+          <a href="{{ url_for('favorite', recipe_id=recipe._id) }}" class="btn favorite-btn">Favorite</a>
+        {% endif %}
       </div>
       {% endfor %}
     </section>
 
-    <!-- UPLOAD RECIPE SECTION -->
+    <!-- Upload Recipe Section -->
     <section class="upload-recipe">
-      <button type="button" class="btn upload-btn" onclick="location.href='{{ url_for('upload_recipe') }}'">Upload New Recipe</button>
+      <a href="{{ url_for('upload_recipe') }}" class="btn upload-btn">Upload New Recipe</a>
     </section>
   </main>
 

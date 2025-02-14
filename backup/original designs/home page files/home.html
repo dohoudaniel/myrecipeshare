@@ -31,14 +31,18 @@
       </div>
       <div class="navbar-right">
         <nav class="desktop-nav">
-          <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+          <a href="{{ url_for('logout') }}" class="nav-link btn">Logout</a>
+          <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
+          <a href="{{ url_for('login') }}" class="nav-link">Login</a>
         </nav>
         <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
       </div>
     </div>
     <nav class="mobile-nav">
-      <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+      <a href="{{ url_for('logout') }}" class="nav-link btn">Logout</a>
+      <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
+      <a href="{{ url_for('login') }}" class="nav-link">Login</a>
     </nav>
   </header>
 
@@ -52,7 +56,7 @@
           <option value="">All Cuisines</option>
           <option value="Italian" {% if cuisine == 'Italian' %}selected{% endif %}>Italian</option>
           <option value="Mexican" {% if cuisine == 'Mexican' %}selected{% endif %}>Mexican</option>
-          <!-- More cuisines as needed -->
+          <!-- Add more cuisines as needed -->
         </select>
         <select name="difficulty">
           <option value="">All Difficulties</option>
@@ -74,13 +78,11 @@
           <p><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
           <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
           <div class="recipe-actions">
-            <button type="button" class="btn view-btn" onclick="location.href='{{ url_for('view_recipe', recipe_id=recipe._id) }}'">
-              <i class="lucide-home"></i> View Recipe
-            </button>
+            <a href="{{ url_for('view_recipe', recipe_id=recipe._id) }}" class="btn view-btn">View Recipe</a>
             {% if recipe._id|string in favorites %}
-              <button type="button" class="btn favorite-btn" onclick="location.href='{{ url_for('favorite', recipe_id=recipe._id) }}'">Unfavorite</button>
+            <a href="{{ url_for('favorite', recipe_id=recipe._id) }}" class="btn favorite-btn">Unfavorite</a>
             {% else %}
-              <button type="button" class="btn favorite-btn" onclick="location.href='{{ url_for('favorite', recipe_id=recipe._id) }}'">Favorite</button>
+            <a href="{{ url_for('favorite', recipe_id=recipe._id) }}" class="btn favorite-btn">Favorite</a>
             {% endif %}
           </div>
         </div>
@@ -90,7 +92,7 @@
 
     <!-- UPLOAD RECIPE SECTION -->
     <section class="upload-recipe">
-      <button type="button" class="btn upload-btn" onclick="location.href='{{ url_for('upload_recipe') }}'">Upload New Recipe</button>
+      <a href="{{ url_for('upload_recipe') }}" class="btn upload-btn">Upload New Recipe</a>
     </section>
   </main>
 
@@ -98,8 +100,9 @@
   <footer>
     <div class="footer-container">
       <p>
-        ©️ 2025 Recipe Share • All Rights Reserved
+        ©️ 2025 Recipe Share • <a href="https://linktr.ee/dohoudanielfavour" target="_blank" rel="noopener noreferrer">Daniel Favour Dohou</a> • All Rights Reserved
       </p>
+      <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
     </div>
   </footer>
 </body>
