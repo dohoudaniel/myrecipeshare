@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - Recipe Share</title>
+  <link rel="icon" href="{{ url_for('static', filename='images/logos/logo.jpg') }}" type="image/jpeg">
+  <!-- Google Font: Merriweather -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Link to the separate landing CSS file -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <!-- Link to the landing JS file -->
+  <script src="{{ url_for('static', filename='js/landing.js') }}" defer></script>
+</head>
+<body>
+  <noscript>
+    <div class="noscript-warning">
+      You must enable JavaScript to use this website.
+    </div>
+  </noscript>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="navbar-left">
+        <img src="{{ url_for('static', filename='images/logos/logo.jpg') }}" alt="Logo" class="logo">
+        <span class="site-name">Recipe Share</span>
+      </div>
+      <div class="navbar-right">
+        <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
+        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+        <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
+
+      </div>
+      <!-- Optional mobile menu button can be added here -->
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero">
+      <h1>Welcome to Recipe Share</h1>
+      <p class="hero-text">
+        Your one-stop destination to discovering, sharing, and saving amazing recipes.
+      </p>
+      <a href="{{ url_for('signup') }}" class="cta-button">Start Here</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      ©️ 2025 copyright • <a href="https://linktr.ee/dohoudanielfavour" class="nav-link">Daniel Favour Dohou</a> • All Rights Reserved
+    </p>
+
+  </footer>
+</body>
+</html>

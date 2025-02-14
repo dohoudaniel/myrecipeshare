@@ -27,14 +27,10 @@
         <span class="site-name">Recipe Share</span>
       </div>
       <div class="navbar-right">
-        <nav class="desktop-nav">
-          <a href="{{ url_for('login') }}" class="nav-link">Login</a>
-          <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
-        </nav>
-        <!-- THEME TOGGLE BUTTON -->
-        <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
-        <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+        <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
       </div>
+      <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
     </div>
     <nav class="mobile-nav">
       <a href="{{ url_for('login') }}" class="nav-link">Login</a>
@@ -44,20 +40,17 @@
 
   <!-- Hero Section -->
   <main class="hero">
-    <h1 class="hero-heading">Welcome to Recipe Share</h1>
+    <h1>Welcome to Recipe Share</h1>
     <p class="hero-text">Your one-stop destination to discovering, sharing, and saving amazing recipes.</p>
     <a href="{{ url_for('signup') }}" class="cta-button">Start Here</a>
   </main>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-container">
-      <p>
-        ©️ 2025 copyright •
-        <a class="nav-link" href="https://linktr.ee/dohoudanielfavour" target="_blank" rel="noopener noreferrer">Daniel Favour Dohou</a>
-        • All Rights Reserved
-      </p>
-    </div>
+    <p>
+      ©️ 2025 copyright • Daniel Favour Dohou • All Rights Reserved
+    </p>
+    <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
   </footer>
 </body>
 </html>
